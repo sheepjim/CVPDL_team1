@@ -85,7 +85,7 @@ python layout.py ${input} ${output}
 
 ## 3. Image Generation -- Instance Diffusion
 ### Preprocessing
-See the tutorial in the following github readme page to build the model:
+See the tutorial in the following github README page to build the model:
 [InstanceDiffusion](https://github.com/frank-xwang/InstanceDiffusion)
 ```sh
 git clone https://github.com/frank-xwang/InstanceDiffusion.git
@@ -93,7 +93,7 @@ conda create --name instdiff python=3.8 -y
 conda activate instdiff
 pip install -r requirements.txt
 ```
-- Download the pretrained model via their Readme
+- Download the pretrained model via their README.
 
 ### Run
 ```sh
@@ -123,7 +123,7 @@ mkdir ./PixelLM/vis_output
 mkdir ./PixelLM/mask_result
 ```
 
-- Download the `PixelLM-7B` checkpoint via the instruction of their README.
+- Download the `PixelLM-7B` checkpoint via the instruction of their README. [PixelLM](https://github.com/MaverickRen/PixelLM)
 
 ### File Input Structure
 
@@ -182,7 +182,7 @@ Our model is based on Llama-2-7b-chat-hf. You need to download the weights manua
 Llama-2-7b-chat-hf: [Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
 ### Inference Pink
 ```sh
-python inference.py \
+python Pink_inference.py \
     --json_folder /path/to/Final_cvpdl/Pink/prompt \
     --image_folder/path/to/Pink/image_folders \
     --model_name /path/to/Pink/Pink_base \
