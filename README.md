@@ -1,4 +1,4 @@
-# CVPDL -- Created Vision-generation Preference D via LM
+# CVPDL -- Created Vision-generation Preference Decision via LM
 
 ## 1. Scenario Prompt Generation
 
@@ -79,7 +79,32 @@ python layout.py ${input} ${output}
 ```
 
 ## 3. Image Generation -- Instance Diffusion
+### Preprocessing
+See the tutorial in the following github readme page to build the model:
+[InstanceDiffusion](https://github.com/frank-xwang/InstanceDiffusion)
+```sh
+$ git clone https://github.com/frank-xwang/InstanceDiffusion.git
+$ conda create --name instdiff python=3.8 -y
+$ conda activate instdiff
+$ pip install -r requirements.txt
+```
+- Download the pretrained model via their Readme
 
+### Run
+```
+python inference.py \
+  --num_images 8 \
+  --output OUTPUT/ \
+  --input_json demos/demo_cat_dog_robin.json \
+  --ckpt pretrained/instancediffusion_sd15.pth \
+  --test_config configs/test_box.yaml \
+  --guidance_scale 7.5 \
+  --alpha 0.8 \
+  --seed 0 \
+  --mis 0.36 \
+  --cascade_strength 0.4 
+```
+- modify the `input_json` file path to our generated JSON file in `Section 2. Generate layout`
 
 ## 4-1. PixelLM BenchMark
 
@@ -99,18 +124,24 @@ $ mkdir ./PixelLM/mask_result
 
 - The file input should be structured to
 ```
-prompts_path
+PixelLM
 |
-|---1.json
-|---2.json
-|---3.json
-|.......
+|---prompts_path
+|      |
+|      |---1.json
+|      |---2.json
+|      |---3.json
+|      |......
 |
-image_path
-|
-|---1.json
-|     |-----gc7.5-seed0-alpha0.8
+|---image_path
+|     |
+|     |---1.json/gc7.5-seed0-alpha0.8
 |     |           |-----0_xl_s0.4_n20.png
+|     |           |-----1_xl_s0.4_n20.png
+|     |           |-----......
+|     |
+|     |---2.json/gc7.5-seed0-alpha0.8
+|                 |-----0_xl_s0.4_n20.png
 |                 |-----1_xl_s0.4_n20.png
 |                 |-----......
 |......
@@ -137,8 +168,34 @@ python3 look_up_the_result.py --range "[start];[end]" --result_file "result.json
 ```
 
 ## 4-2 Pink Bench Mark
+### Pink Weights
+Base: [Pink_Base](https://huggingface.co/SY-Xuan/Pink_base)
+### LLaMA2 Weight Download
+--- 
+Our model is based on Llama-2-7b-chat-hf. You need to download the weights manually.
 
-## 4-3 Human Bench Mark
+Llama-2-7b-chat-hf: [Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
+### Inference Pink
+```
+python inference.py \
+    --json_folder /path/to/Final_cvpdl/Pink/prompt \
+    --image_folder/path/to/Pink/image_folders \
+    --model_name /path/to/Pink/Pink_base \
+    --llama_path /path/to/Pink/meta-llamaLlama-2-7b-chat-hf \
+    --output_dir /path/to/Pink/output_image \
+    --output_file /path/to/output.json
+
+```
+## 4-3 Human Benchmark
+The human evaluation criteria require that objects must be in a
+recognizable form as they would appear in their natural state to
+be considered valid. Partially incomplete but still identifiable
+objects are also scored. For example, a distorted human face
+would not be considered valid, while a generative model that
+produces only the lower half of a human body would still
+receive a score if the lower half is recognizable as such.
+![human_benchmark](human_benchmark.png)
+
 
 ## 5. Calculate MSE
 ```
