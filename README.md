@@ -1,4 +1,5 @@
 # CVPDL -- Created Vision-generation Preference Decision via LM
+![pipeline](./fig/CVPDL_Pipeline.png)
 
 ## 1. Scenario Prompt Generation
 
@@ -6,7 +7,7 @@
 - We utilize `llama3` via `unsolth` package to generate the scenario.
 
 ### Run
-```
+```sh
 cd llama3_for_cv
 python3 unsolth_llama3_cv.py
 ```
@@ -15,7 +16,7 @@ if encouter RUNTIME Error for unsolth
 
 find
 ```sh
-$ YOUR_PATH/python3.9/site-packages/unsloth/models/llama.py
+YOUR_PATH/python3.9/site-packages/unsloth/models/llama.py
 ```
 
 comment out line 1645
@@ -32,7 +33,7 @@ comment out line 1645
 ```
 
 ## 2. Generate layout
-```
+```sh
 python layout.py ${input} ${output}
 ```
 ```
@@ -83,15 +84,15 @@ python layout.py ${input} ${output}
 See the tutorial in the following github readme page to build the model:
 [InstanceDiffusion](https://github.com/frank-xwang/InstanceDiffusion)
 ```sh
-$ git clone https://github.com/frank-xwang/InstanceDiffusion.git
-$ conda create --name instdiff python=3.8 -y
-$ conda activate instdiff
-$ pip install -r requirements.txt
+git clone https://github.com/frank-xwang/InstanceDiffusion.git
+conda create --name instdiff python=3.8 -y
+conda activate instdiff
+pip install -r requirements.txt
 ```
 - Download the pretrained model via their Readme
 
 ### Run
-```
+```sh
 python inference.py \
   --num_images 8 \
   --output OUTPUT/ \
@@ -102,7 +103,7 @@ python inference.py \
   --alpha 0.8 \
   --seed 0 \
   --mis 0.36 \
-  --cascade_strength 0.4 
+  --cascade_strength 0.4
 ```
 - modify the `input_json` file path to our generated JSON file in `Section 2. Generate layout`
 
@@ -110,12 +111,12 @@ python inference.py \
 
 ### Preprocessing
 ```sh
-$ git clone https://github.com/MaverickRen/PixelLM.git
-$ mv ./inference_for_cv.sh ./PixelLM
-$ mv ./chat_for_cv.py ./PixelLM
-$ mv ./look_up_the_result.py/PixelLM
-$ mkdir ./PixelLM/vis_output 
-$ mkdir ./PixelLM/mask_result
+git clone https://github.com/MaverickRen/PixelLM.git
+mv ./inference_for_cv.sh ./PixelLM
+mv ./chat_for_cv.py ./PixelLM
+mv ./look_up_the_result.py/PixelLM
+mkdir ./PixelLM/vis_output
+mkdir ./PixelLM/mask_result
 ```
 
 - Download the `PixelLM-7B` checkpoint via the instruction of their README.
@@ -171,12 +172,12 @@ python3 look_up_the_result.py --range "[start];[end]" --result_file "result.json
 ### Pink Weights
 Base: [Pink_Base](https://huggingface.co/SY-Xuan/Pink_base)
 ### LLaMA2 Weight Download
---- 
+---
 Our model is based on Llama-2-7b-chat-hf. You need to download the weights manually.
 
 Llama-2-7b-chat-hf: [Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
 ### Inference Pink
-```
+```sh
 python inference.py \
     --json_folder /path/to/Final_cvpdl/Pink/prompt \
     --image_folder/path/to/Pink/image_folders \
@@ -194,10 +195,10 @@ objects are also scored. For example, a distorted human face
 would not be considered valid, while a generative model that
 produces only the lower half of a human body would still
 receive a score if the lower half is recognizable as such.
-![human_benchmark](human_benchmark.png)
+![human_benchmark](./fig/human_benchmark.png)
 
 
 ## 5. Calculate MSE
-```
-python eval.py ${human_score.json} ${PixelLM.json} ${PINK.json}  
+```sh
+python eval.py ${human_score.json} ${PixelLM.json} ${PINK.json}
 ```
