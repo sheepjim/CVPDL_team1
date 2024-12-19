@@ -29,7 +29,6 @@ comment out line 1645
 {"caption": "A serene beach scene at sunset with a wooden pier and calm sea.", "annos": [{"caption": "wooden pier"}, {"caption": "calm sea"}, {"caption": "setting sun"}]}
 {"caption": "A person relaxing on a beach with a palm tree and a sailboat in the background.", "annos": [{"caption": "person"}, {"caption": "palm tree"}, {"caption": "sailboat"}]}
 {"_COMMENT": "So on so forth"}
-...
 ```
 
 ## 2. Generate layout
