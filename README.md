@@ -1,6 +1,10 @@
 # CVPDL -- Created Vision-generation Preference Decision via LM
 ![pipeline](./fig/CVPDL_Pipeline.png)
 
+## 0. Project Report
+
+- See `report.pdf`.
+
 ## 1. Scenario Prompt Generation
 
 - We utilize `ChatGPT` to generate the 10 prompts into the prompt pools.
